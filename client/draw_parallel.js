@@ -36,7 +36,7 @@ function(){
   
   height        = 1240;
   width         = 930;
-  boxSide       = 300;
+  boxSide       = 310;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
   linkScale     = d3.scale.linear().domain([0,70000]).range([1,50]);
@@ -50,7 +50,7 @@ function(){
   
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
-        return "translate("+(boxSide*(i%3)+10)+","
+        return "translate("+(boxSide*(i%3))+","
                            + boxSide*Math.floor(i/3)
                            + ")"
         })
