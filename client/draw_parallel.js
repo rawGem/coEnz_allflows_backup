@@ -22,7 +22,7 @@ function(){
   var Routes, height, width, boxSide, linkScale, linkGutter,
       currentYpos, lowVolume;
 
-  Routes = [] 
+  Routes = [];
   
   Object.keys(data).forEach(
   function(el) {
@@ -33,7 +33,6 @@ function(){
   })
 
   console.log(Routes)
-  //Routes = Routes[0]
   
   height        = 1240;
   width         = 930;
@@ -56,9 +55,6 @@ function(){
                            + ")"
         })
         
-
-  
-
   // draw links
   groups.each(
   function(data,index){ 
@@ -71,7 +67,7 @@ function(){
         .append("rect")
         .attr("fill", "#bbb")
         .attr("x", function(d,i) {
-        console.log(data[d]) 
+        //console.log(data[d]) 
         return 10})
         .attr("y", function(d,i) {
           if (currentYpos === 0) {
@@ -86,7 +82,6 @@ function(){
           }
         })
         .attr("height", function(d,i) {
-            console.log( "height", linkScale(data[d].segments[0]["Product volume"]) )
             return linkScale(data[d].segments[0]["Product volume"])
         })
         .attr("width", 300)
@@ -106,44 +101,6 @@ function(){
           
   
   })
-  //groups.selectAll("rect").data(
-  //                         function(d,i) {
-  //                         currentPos = 0;
-  //                         console.log("d", d)
-  //                         return Object.keys(d)})
-  //    .enter()
-  //      .append("rect")
-  //      .attr("fill", function(d,i){console.log(d,this)})
-        //.append("rect")
-        //.attr("x", function(d,i) {return 10})
-        //.attr("y", function(d,i) {
-        //  if (currentYpos === 0) {
-        //    Routes[i][d]["dy"] = 0
-        //    currentYpos += linkScale(Routes[i][d].segments[0]["Product volume"])
-        //    return 0
-        //  }
-        //  else {
-        //    currentYpos += linkScale(Routes[i][d].segments[0]["Product volume"])+linkGutter
-        //    Routes[i][d]["dy"] = currentYpos - linkScale(Routes[i][d].segments[0]["Product volume"])
-        //    return currentYpos - linkScale(Routes[i][d].segments[0]["Product volume"])
-        //  }
-        //})
-        //.attr("height", function(d,i) {
-        //    console.log( "height", linkScale(Routes[i][d].segments[0]["Product volume"]) )
-        //    return linkScale(Routes[i][d].segments[0]["Product volume"])
-        //})
-        //.attr("width", 300)
-        //.attr("fill", function(d,i) {
-        //var seg = Routes[i][d].segments[0]
-        //return seg["Product volume"] < lowVolume ? "red" : "#eeeeef"
-        //}).on("mouseenter", function(d){
-        //   svg.append("rect")
-        //      .attr("x", 310)
-        //      .attr("y", Routes[i][d].dy)
-        //      .attr("width", 20)
-        //      .attr("height", this.getAttribute("height"))
-        //      .attr("fill", "orange")
-        //   })
 
   // label paths
   //groups.append("text")
