@@ -1,0 +1,31 @@
+svg {
+  background-color: #FFF;
+}
+
+.link {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .15;
+}
+
+.link.low {
+  fill: none;
+  stroke: #E00;
+  stroke-opacity: 1;
+}
+
+rect {
+  shape-rendering: crispEdges;
+}
+
+.node text {
+    pointer-events: none;
+    text-shadow: 0 1px 0 #fff;
+    font-family: "PT Serif", serif;
+}
+
+text {
+  font-family: "PT Serif", serif;
+  font-size: 12px;
+  text-shadow: 0 1px 0 #fff;
+}
