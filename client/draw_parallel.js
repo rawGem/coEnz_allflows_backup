@@ -19,7 +19,7 @@ function(){
 
   if (instance.subscriptionsReady()) {
 
-  var Routes, height, width, boxSide, linkScale, linkGutter,
+  var Routes, height, width, boxHeight, boxWidth, linkScale, linkGutter,
       currentYpos, lowVolume, color, flowIds;
 
   Routes = [];
@@ -52,22 +52,23 @@ function(){
   flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
   height        = 1240;
   width         = 940;
-  color         = d3.scale.category20();
+  color         = d3.scale.category20c();
   colorByPath   = {};
-  boxSide       = 310;
+  boxHeight     = 300;
+  boxWidth      = 310;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
-  linkScale     = d3.scale.linear().domain([0,70000]).range([3,50]);
+  linkScale     = d3.scale.linear().domain([0,70000]).range([3,100]);
   lowVolume     = 1;
   linkGutter    = 0;
 
- for (var i=0; i < 3; i++) {
+ for (var i=0; i < 5; i++) {
    color(i)
  }
 
  flowIds.forEach(
  function(el,i) {
-   colorByPath[el] = color(i+3)
+   colorByPath[el] = color(i+5)
  })
 
   var svg = d3.select("body").append("svg")
@@ -89,8 +90,8 @@ function(){
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
-        return "translate("+(boxSide*(i%3))+","
-                           + (boxSide*Math.floor(i/3)+5)
+        return "translate("+(boxWidth*(i%3))+","
+                           + (boxHeight*Math.floor(i/3)+5)
                            + ")"
         })
         
