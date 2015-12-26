@@ -52,7 +52,7 @@ function(){
   flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
   height        = 1240;
   width         = 940;
-  color         = d3.scale.category20c();
+  color         = d3.scale.category20();
   colorByPath   = {};
   boxSide       = 310;
   routeKeys     = Object.keys(Routes);
@@ -61,9 +61,13 @@ function(){
   lowVolume     = 1;
   linkGutter    = 0;
 
+ for (var i=0; i < 3; i++) {
+   color(i)
+ }
+
  flowIds.forEach(
  function(el,i) {
-   colorByPath[el] = color(i)
+   colorByPath[el] = color(i+3)
  })
 
   var svg = d3.select("body").append("svg")
