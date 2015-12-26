@@ -20,7 +20,7 @@ function(){
   if (instance.subscriptionsReady()) {
 
   var Routes, height, width, boxSide, linkScale, linkGutter,
-      currentYpos, lowVolume, color;
+      currentYpos, lowVolume, color, flowIds;
 
   Routes = [];
   
@@ -48,7 +48,8 @@ function(){
   })
 
   console.log(Routes)
-  
+
+  flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
   height        = 1540;
   width         = 1500;
   color         = d3.scale.category20();
@@ -61,16 +62,22 @@ function(){
   lowVolume     = 1;
   linkGutter    = 10;
 
-  colorByPath["558"]= color(1)
-  colorByPath["561"]= color(2)
-  colorByPath["594"]= color(3)
-  colorByPath["597"]= color(4)
-  colorByPath["600"]= color(5)
-  colorByPath["606"]= color(6)
-  colorByPath["615"]= color(7)
-  colorByPath["618"]= color(8)
-  colorByPath["662"]= color(9)
-  colorByPath["695"]= color(10)
+  flowIds.forEach(
+  function(el,i) {
+    colorByPath[el] = color(i) 
+  })
+
+  //colorByPath["557"]= color(1)
+  //colorByPath["558"]= color(1)
+  //colorByPath["561"]= color(1)
+  //colorByPath["594"]= color(1)
+  //colorByPath["597"]= color(1)
+  //colorByPath["600"]= color(1)
+  //colorByPath["606"]= color(1)
+  //colorByPath["615"]= color(1)
+  //colorByPath["618"]= color(1)
+  //colorByPath["662"]= color(1)
+  //colorByPath["695"]= color(1)
 
   var svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -89,6 +96,7 @@ function(){
   d3.select(this).selectAll("rect")
         .data(function(d,i) {
         currentYpos = 0;
+        return flowIds
         return Object.keys(d)
         })
        .enter()
@@ -98,27 +106,33 @@ function(){
         //console.log(data[d]) 
         return 10})
         .attr("y", function(d,i) {
-          if (currentYpos === 0) {
+          if (true) 
+            return i*32;
+          if (currentYpos === 0 && data[d]) {
             data[d]["dy"] = 0
             currentYpos += linkScale(data[d].segments[0]["Product volume"])
-            return 0
+            return 0;
           }
-          else {
+          else if (data[d]) {
             currentYpos += linkScale(data[d].segments[0]["Product volume"])+linkGutter
             data[d]["dy"] = currentYpos - linkScale(data[d].segments[0]["Product volume"])
-            return i*32
-            return currentYpos - linkScale(data[d].segments[0]["Product volume"])
+            return i*32;
+            //return currentYpos - linkScale(data[d].segments[0]["Product volume"])
           }
         })
         .attr("height", function(d,i) {
-            return linkScale(data[d].segments[0]["Product volume"])
+        if (data[d]) {
+        return linkScale(data[d].segments[0]["Product volume"])
+        }
         })
         .attr("width", 50)
         .attr("fill", function(d,i) {
+        if (data[d]) {
         console.log("fill data", d)
         var clr = colorByPath[d]
         var seg = data[d].segments[0]
         return seg["Product volume"] < lowVolume ? "red" : clr ? clr : "#eeeeef"
+        }
         }).on("mouseenter", function(d){
            console.log(data[d])
            //svg.append("rect")
