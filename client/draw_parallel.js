@@ -53,7 +53,8 @@ function(){
   width         = 1500;
   color         = d3.scale.category20();
   colorByPath   = {};
-  boxSide       = 410;
+  boxWidth       = 210;
+  boxHeight       = 410;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
   linkScale     = d3.scale.linear().domain([0,93000]).range([2,28]);
@@ -77,8 +78,8 @@ function(){
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
-        return "translate("+(boxSide*(i%3))+","
-                           + boxSide*Math.floor(i/3)
+        return "translate("+(boxWidth*(i%6))+","
+                           + boxHeight*Math.floor(i/6)
                            + ")"
         })
         
@@ -112,7 +113,7 @@ function(){
         .attr("height", function(d,i) {
             return linkScale(data[d].segments[0]["Product volume"])
         })
-        .attr("width", 300)
+        .attr("width", 150)
         .attr("fill", function(d,i) {
         console.log("fill data", d)
         var clr = colorByPath[d]
