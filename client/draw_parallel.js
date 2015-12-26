@@ -66,20 +66,22 @@ function(){
    colorByPath[el] = color(i)
  })
 
-  //colorByPath["558"]= color(1)
-  //colorByPath["561"]= color(2)
-  //colorByPath["594"]= color(3)
-  //colorByPath["597"]= color(4)
-  //colorByPath["600"]= color(5)
-  //colorByPath["606"]= color(6)
-  //colorByPath["615"]= color(7)
-  //colorByPath["618"]= color(8)
-  //colorByPath["662"]= color(9)
-  //colorByPath["695"]= color(10)
-
   var svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
+
+  svg.append("defs").append("pattern")
+        .attr("id", "org_diag")
+        .attr("width", 8)
+        .attr("height", 8)
+        .attr("patternUnits", "userSpaceOnUse")
+        .attr("patternTransform", "rotate(45)")
+      .append("rect")
+        .attr("width", 4)
+        .attr("height", 8)
+        .attr("transform", "translate(0,0)")
+        .attr("fill", "orange")
+        
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
@@ -129,7 +131,7 @@ function(){
           console.log("fill data", d)
           var clr = colorByPath[d]
           var seg = data[d].segments[0]
-          return seg["Product volume"] < lowVolume ? "red" : clr ? clr : "#eeeeef"
+          return seg["Product volume"] < lowVolume ? "url(#org_diag)" : clr ? clr : "#eeeeef"
         }
         }).on("mouseenter", function(d){
            console.log(data[d])
