@@ -49,14 +49,14 @@ function(){
 
   console.log(Routes)
   
-  height        = 1240;
-  width         = 930;
+  height        = 1540;
+  width         = 1500;
   color         = d3.scale.category20();
   colorByPath   = {};
-  boxSide       = 310;
+  boxSide       = 410;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
-  linkScale     = d3.scale.linear().domain([0,70000]).range([1,30]);
+  linkScale     = d3.scale.linear().domain([0,93000]).range([2,28]);
   lowVolume     = 1;
   linkGutter    = 10;
 
@@ -105,6 +105,7 @@ function(){
           else {
             currentYpos += linkScale(data[d].segments[0]["Product volume"])+linkGutter
             data[d]["dy"] = currentYpos - linkScale(data[d].segments[0]["Product volume"])
+            return i*32
             return currentYpos - linkScale(data[d].segments[0]["Product volume"])
           }
         })
