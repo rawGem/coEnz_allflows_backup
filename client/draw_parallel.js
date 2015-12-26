@@ -28,8 +28,23 @@ function(){
   function(el) {
     if (el !== "_id") {
       var d = data[el].ord11
-      Routes.push(ParseUtils.processRoutes(d))
+      var ob = ParseUtils.processRoutes(d);
+      ob["Period"] = el;
+      Routes.push(ob)
     }
+  })
+  
+  Routes.sort(function(a,b) { 
+  var a = parseInt(a["Period"].replace('p', ''))
+  var b = parseInt(b["Period"].replace('p', ''))
+  if (a < b)
+    return -1
+  else
+    return 1
+  })
+
+  Routes.map(function(el) {
+   delete(el.Period);
   })
 
   console.log(Routes)
