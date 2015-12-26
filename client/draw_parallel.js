@@ -56,9 +56,9 @@ function(){
   boxSide       = 310;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
-  linkScale     = d3.scale.linear().domain([0,70000]).range([1,30]);
+  linkScale     = d3.scale.linear().domain([0,70000]).range([3,50]);
   lowVolume     = 1;
-  linkGutter    = 10;
+  linkGutter    = 0;
 
   colorByPath["558"]= color(1)
   colorByPath["561"]= color(2)
@@ -92,7 +92,6 @@ function(){
         })
        .enter()
         .append("rect")
-        .attr("fill", "#bbb")
         .attr("x", function(d,i) {
         //console.log(data[d]) 
         return 10})
@@ -112,6 +111,8 @@ function(){
             return linkScale(data[d].segments[0]["Product volume"])
         })
         .attr("width", 300)
+        .attr("stroke-width", 1)
+        .attr("stroke", "#fff")
         .attr("fill", function(d,i) {
         console.log("fill data", d)
         var clr = colorByPath[d]
