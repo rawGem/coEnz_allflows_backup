@@ -52,9 +52,9 @@ function(){
   flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
   height        = 1540;
   width         = 1500;
-  color         = d3.scale.category20();
+  color         = d3.scale.category20b();
   colorByPath   = {};
-  boxWidth       = 75;
+  boxWidth       = 35;
   boxHeight       = 410;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
@@ -125,7 +125,7 @@ function(){
         return linkScale(data[d].segments[0]["Product volume"])
         }
         })
-        .attr("width", 50)
+        .attr("width", 30)
         .attr("fill", function(d,i) {
         if (data[d]) {
         console.log("fill data", d)
