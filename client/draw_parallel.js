@@ -51,7 +51,7 @@ function(){
   
   flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
   height        = 1240;
-  width         = 930;
+  width         = 940;
   color         = d3.scale.category20c();
   colorByPath   = {};
   boxSide       = 310;
@@ -86,7 +86,7 @@ function(){
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
         return "translate("+(boxSide*(i%3))+","
-                           + boxSide*Math.floor(i/3)
+                           + (boxSide*Math.floor(i/3)+5)
                            + ")"
         })
         
