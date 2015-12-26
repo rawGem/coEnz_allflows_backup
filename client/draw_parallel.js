@@ -20,7 +20,7 @@ function(){
   if (instance.subscriptionsReady()) {
 
   var Routes, height, width, boxSide, linkScale, linkGutter,
-      currentYpos, lowVolume, color;
+      currentYpos, lowVolume, color, flowIds;
 
   Routes = [];
   
@@ -49,9 +49,10 @@ function(){
 
   console.log(Routes)
   
+  flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
   height        = 1240;
   width         = 930;
-  color         = d3.scale.category20();
+  color         = d3.scale.category20c();
   colorByPath   = {};
   boxSide       = 310;
   routeKeys     = Object.keys(Routes);
@@ -60,16 +61,21 @@ function(){
   lowVolume     = 1;
   linkGutter    = 0;
 
-  colorByPath["558"]= color(1)
-  colorByPath["561"]= color(2)
-  colorByPath["594"]= color(3)
-  colorByPath["597"]= color(4)
-  colorByPath["600"]= color(5)
-  colorByPath["606"]= color(6)
-  colorByPath["615"]= color(7)
-  colorByPath["618"]= color(8)
-  colorByPath["662"]= color(9)
-  colorByPath["695"]= color(10)
+ flowIds.forEach(
+ function(el,i) {
+   colorByPath[el] = color(i)
+ })
+
+  //colorByPath["558"]= color(1)
+  //colorByPath["561"]= color(2)
+  //colorByPath["594"]= color(3)
+  //colorByPath["597"]= color(4)
+  //colorByPath["600"]= color(5)
+  //colorByPath["606"]= color(6)
+  //colorByPath["615"]= color(7)
+  //colorByPath["618"]= color(8)
+  //colorByPath["662"]= color(9)
+  //colorByPath["695"]= color(10)
 
   var svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -88,6 +94,7 @@ function(){
   d3.select(this).selectAll("rect")
         .data(function(d,i) {
         currentYpos = 0;
+        return flowIds
         return Object.keys(d)
         })
        .enter()
@@ -96,6 +103,7 @@ function(){
         //console.log(data[d]) 
         return 10})
         .attr("y", function(d,i) {
+        if (data[d]){
           if (currentYpos === 0) {
             data[d]["dy"] = 0
             currentYpos += linkScale(data[d].segments[0]["Product volume"])
@@ -106,18 +114,23 @@ function(){
             data[d]["dy"] = currentYpos - linkScale(data[d].segments[0]["Product volume"])
             return currentYpos - linkScale(data[d].segments[0]["Product volume"])
           }
+        }
         })
         .attr("height", function(d,i) {
-            return linkScale(data[d].segments[0]["Product volume"])
+        if (data[d]){
+          return linkScale(data[d].segments[0]["Product volume"])
+        }
         })
         .attr("width", 300)
         .attr("stroke-width", 1)
         .attr("stroke", "#fff")
         .attr("fill", function(d,i) {
-        console.log("fill data", d)
-        var clr = colorByPath[d]
-        var seg = data[d].segments[0]
-        return seg["Product volume"] < lowVolume ? "red" : clr ? clr : "#eeeeef"
+        if (data[d]){
+          console.log("fill data", d)
+          var clr = colorByPath[d]
+          var seg = data[d].segments[0]
+          return seg["Product volume"] < lowVolume ? "red" : clr ? clr : "#eeeeef"
+        }
         }).on("mouseenter", function(d){
            console.log(data[d])
            //svg.append("rect")
