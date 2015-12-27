@@ -54,7 +54,7 @@ function(){
   width         = 1200;
   color         = d3.scale.category20();
   colorByPath   = {};
-  boxSide       = 150;
+  boxSide       = 75;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
   linkScale     = d3.scale.linear().domain([0,93000]).range([3,50]);
@@ -77,12 +77,12 @@ function(){
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
-        return "translate("+ (boxSide*(i%6))+","
-                           + (boxSide*Math.floor(i/6)+5)
+        return "translate("+ (boxSide*(i%12))+","
+                           + (boxSide*Math.floor(i/12)+5)
                            + ")"
         })
         
-  // draw links
+  // add rects for flows
   groups.each(
   function(data,index){ 
   d3.select(this).selectAll("rect")
@@ -114,7 +114,7 @@ function(){
           return linkScale(data[d].segments[0]["Product volume"])
         }
         })
-        .attr("width", 145)
+        .attr("width", 70)
         .attr("stroke-width", 1)
         .attr("stroke", "#fff")
         .attr("fill", function(d,i) {
@@ -128,10 +128,12 @@ function(){
            })
   })
 
+  // add the circles for low volume
   groups.each(
   function(data,index) {
     var currentYposLow = 100;
-    var xIndex = 0;
+    var xIndex1 = 0;
+    var xIndex2 = 0;
   d3.select(this).selectAll("low")
         .data(function(d,i) {
         return flowIds
@@ -142,15 +144,16 @@ function(){
         .attr("cx", function(d,i) {
         if (data[d]){
           if (data[d].segments[0]["Product volume"] < 1) {
-            xIndex+=1
-            return 10*(xIndex-1)+15
+            xIndex1+=1
+            return 10*((xIndex1-1)%7)+15
           }
         }
         return 10})
         .attr("cy", function(d,i) {
         if (data[d]){
           if (data[d].segments[0]["Product volume"] < 1) {
-            return currentYposLow
+            xIndex2 += 1
+            return currentYposLow+10*Math.floor((xIndex2-1)/7)
             currentYposLow += linkScale(data[d].segments[0]["Product volume"])+3
             return currentYposLow - linkScale(data[d].segments[0]["Product volume"])
           }
