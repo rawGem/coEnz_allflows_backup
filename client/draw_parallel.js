@@ -65,6 +65,7 @@ function(){
    color(i)
  }
 
+
  flowIds.forEach(
  function(el,i) {
    colorByPath[el] = color(i+3)
@@ -74,17 +75,40 @@ function(){
         .attr("width", width)
         .attr("height", height);
 
-  svg.append("defs").append("pattern")
+//<defs>
+//<pattern id="uhpce" patternUnits="userSpaceOnUse" width="10" height="10">
+//<rect width="10" height="10" fill="orange">
+//</rect>
+//<path d="M 0,10 l 10,-10 M -2.5,2.5 l 5,-5
+//         M 7.5,12.5 l 5,-5" 
+//      stroke-width="5"
+//      shape-rendering="auto"
+//      stroke="#888"
+//      stroke-linecap="square">
+//</path>
+//</pattern>
+//</defs>
+
+  var defs = svg.append("defs").append("pattern")
         .attr("id", "org_diag")
-        .attr("width", 8)
-        .attr("height", 8)
+        .attr("width", 25)
+        .attr("height", 25)
         .attr("patternUnits", "userSpaceOnUse")
-        .attr("patternTransform", "rotate(45)")
-      .append("rect")
-        .attr("width", 4)
-        .attr("height", 8)
-        .attr("transform", "translate(0,0)")
-        .attr("fill", "orange")
+        //.attr("patternTransform", "rotate(45)")
+
+  defs.append("rect")
+        .attr("width", 25)
+        .attr("height", 25)
+        .attr("fill", "#888")
+
+  defs.append("path")
+        .attr("d", "M 0,25 l 25,-25 M -6.25,6.25 l 12.5,-12.5"+
+                   "M 18.75,31.25 l 12.5,-12.5")
+        .attr("stroke-width", 12)
+        .attr("shape-rendering", "auto")
+        .attr("stroke", "orange")
+        .attr("stroke-linecap", "square")
+
         
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
@@ -110,12 +134,12 @@ function(){
         return 10})
         .attr("y", function(d,i) {
         if (data[d]){
-          if (currentYpos === 0) {
+          if (currentYpos === 0 && data[d].segments[0]["Product volume"] > 1) {
             data[d]["dy"] = 0
             currentYpos += linkScale(data[d].segments[0]["Product volume"])
             return 0
           }
-          else {
+          else if (data[d].segments[0]["Product volume"] > 1) {
             currentYpos += linkScale(data[d].segments[0]["Product volume"])+linkGutter
             data[d]["dy"] = currentYpos - linkScale(data[d].segments[0]["Product volume"])
             return currentYpos - linkScale(data[d].segments[0]["Product volume"])
@@ -123,7 +147,7 @@ function(){
         }
         })
         .attr("height", function(d,i) {
-        if (data[d]){
+        if (data[d] && data[d].segments[0]["Product volume"] > 1){
           return linkScale(data[d].segments[0]["Product volume"])
         }
         })
@@ -131,8 +155,7 @@ function(){
         .attr("stroke-width", 1)
         .attr("stroke", "#fff")
         .attr("fill", function(d,i) {
-        if (data[d]){
-          console.log("fill data", d)
+        if (data[d] && data[d].segments[0]["Product volume"] > 1){
           var clr = colorByPath[d]
           var seg = data[d].segments[0]
           return seg["Product volume"] < lowVolume ? "url(#org_diag)" : clr ? clr : "#eeeeef"
@@ -146,9 +169,58 @@ function(){
            //   .attr("height", this.getAttribute("height"))
            //   .attr("fill", "orange")
            })
-        
-          
-  
+  })
+
+  groups.each(
+  function(data,index) {
+    var dy = Math.max.apply(null, Object.keys(data));
+    var currentYposLow = 95
+    //var currentYposLow = data[dy].dy + 10
+    console.log("---- second each ------")
+    console.log(data)
+    console.log("last dy?", data[dy].dy)
+  d3.select(this).selectAll("low")
+        .data(function(d,i) {
+        return flowIds
+        })
+       .enter()
+        .append("rect")
+        .attr("class", "low")
+        .attr("x", function(d,i) {
+        //console.log(data[d]) 
+        return 10})
+        .attr("y", function(d,i) {
+        if (data[d]){
+          if (data[d].segments[0]["Product volume"] < 1) {
+            currentYposLow += linkScale(data[d].segments[0]["Product volume"])+3
+            return currentYposLow - linkScale(data[d].segments[0]["Product volume"])
+          }
+        }
+        })
+        .attr("height", function(d,i) {
+        if (data[d] && data[d].segments[0]["Product volume"] < 1){
+          return 1
+          return linkScale(data[d].segments[0]["Product volume"])
+       }
+        })
+        .attr("width", 145)
+        .attr("stroke-width", 1)
+        .attr("stroke", "none")
+        .attr("fill", function(d,i) {
+        if (data[d] && data[d].segments[0]["Product volume"] < 1){
+          var clr = colorByPath[d]
+          var seg = data[d].segments[0]
+          return seg["Product volume"] < lowVolume ? "url(#org_diag)" : clr ? clr : "#eeeeef"
+        }
+        }).on("mouseenter", function(d){
+           console.log(data[d])
+           //svg.append("rect")
+           //   .attr("x", 310)
+           //   .attr("y", data[d].dy)
+           //   .attr("width", 20)
+           //   .attr("height", this.getAttribute("height"))
+           //   .attr("fill", "orange")
+           })
   })
 
   // label paths
