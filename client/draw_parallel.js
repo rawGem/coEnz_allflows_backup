@@ -50,11 +50,11 @@ function(){
   console.log(Routes)
   
   flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
-  height        = 1240;
-  width         = 940;
+  height        = 400;
+  width         = 1200;
   color         = d3.scale.category20();
   colorByPath   = {};
-  boxSide       = 310;
+  boxSide       = 150;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
   linkScale     = d3.scale.linear().domain([0,93000]).range([3,50]);
@@ -89,8 +89,8 @@ function(){
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
-        return "translate("+(boxSide*(i%3))+","
-                           + (boxSide*Math.floor(i/3)+5)
+        return "translate("+ (boxSide*(i%6))+","
+                           + (boxSide*Math.floor(i/6)+5)
                            + ")"
         })
         
@@ -127,7 +127,7 @@ function(){
           return linkScale(data[d].segments[0]["Product volume"])
         }
         })
-        .attr("width", 300)
+        .attr("width", 145)
         .attr("stroke-width", 1)
         .attr("stroke", "#fff")
         .attr("fill", function(d,i) {
