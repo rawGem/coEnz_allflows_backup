@@ -75,42 +75,6 @@ function(){
         .attr("width", width)
         .attr("height", height);
 
-//<defs>
-//<pattern id="uhpce" patternUnits="userSpaceOnUse" width="10" height="10">
-//<rect width="10" height="10" fill="orange">
-//</rect>
-//<path d="M 0,10 l 10,-10 M -2.5,2.5 l 5,-5
-//         M 7.5,12.5 l 5,-5" 
-//      stroke-width="5"
-//      shape-rendering="auto"
-//      stroke="#888"
-//      stroke-linecap="square">
-//</path>
-//</pattern>
-//</defs>
-
-  var defs = svg.append("defs").append("pattern")
-        .attr("id", "org_diag")
-        .attr("width", 25)
-        .attr("height", 25)
-        .attr("patternUnits", "userSpaceOnUse")
-        //.attr("patternTransform", "rotate(45)")
-
-  defs.append("rect")
-        .attr("width", 25)
-        .attr("height", 25)
-        .attr("fill", "#888")
-
-  defs.append("path")
-        .attr("d", "M 0,25 l 25,-25 M -6.25,6.25 l 12.5,-12.5"+
-                   "M 18.75,31.25 l 12.5,-12.5")
-        .attr("stroke-width", 12)
-        .attr("shape-rendering", "auto")
-        .attr("stroke", "orange")
-        .attr("stroke-linecap", "square")
-
-        
-
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
         return "translate("+ (boxSide*(i%6))+","
@@ -130,7 +94,6 @@ function(){
        .enter()
         .append("rect")
         .attr("x", function(d,i) {
-        //console.log(data[d]) 
         return 10})
         .attr("y", function(d,i) {
         if (data[d]){
@@ -162,24 +125,13 @@ function(){
         }
         }).on("mouseenter", function(d){
            console.log(data[d])
-           //svg.append("rect")
-           //   .attr("x", 310)
-           //   .attr("y", data[d].dy)
-           //   .attr("width", 20)
-           //   .attr("height", this.getAttribute("height"))
-           //   .attr("fill", "orange")
            })
   })
 
   groups.each(
   function(data,index) {
-    var dy = Math.max.apply(null, Object.keys(data));
     var currentYposLow = 95;
     var xIndex = 0;
-    //var currentYposLow = data[dy].dy + 10
-    console.log("---- second each ------")
-    console.log(data)
-    console.log("last dy?", data[dy].dy)
   d3.select(this).selectAll("low")
         .data(function(d,i) {
         return flowIds
@@ -194,7 +146,6 @@ function(){
             return 7*(xIndex-1)+15
           }
         }
-        //console.log(data[d]) 
         return 10})
         .attr("cy", function(d,i) {
         if (data[d]){
@@ -205,19 +156,12 @@ function(){
           }
         }
         })
-        //.attr("height", function(d,i) {
-        //if (data[d] && data[d].segments[0]["Product volume"] < 1){
-        //  return 1
-        //  return linkScale(data[d].segments[0]["Product volume"])
-        // }
-        //})
         .attr("r", function(d,i) {
         if (data[d] && data[d].segments[0]["Product volume"] < 1){
           return 3
           return linkScale(data[d].segments[0]["Product volume"])
          }
         })
-        //.attr("width", 145)
         .attr("stroke-width", 1)
         .attr("stroke", "none")
         .attr("fill", function(d,i) {
@@ -229,12 +173,6 @@ function(){
         }
         }).on("mouseenter", function(d){
            console.log(data[d])
-           //svg.append("rect")
-           //   .attr("x", 310)
-           //   .attr("y", data[d].dy)
-           //   .attr("width", 20)
-           //   .attr("height", this.getAttribute("height"))
-           //   .attr("fill", "orange")
            })
   })
 
