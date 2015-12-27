@@ -19,7 +19,7 @@ function(){
 
   if (instance.subscriptionsReady()) {
 
-  var Routes, height, width, boxSide, linkScale, linkGutter,
+  var Routes, height, width, boxHeight, boxWidth, linkScale, linkGutter,
       currentYpos, lowVolume, color, flowIds;
 
   Routes = [];
@@ -50,21 +50,21 @@ function(){
   console.log(Routes)
   
   flowIds       = ['555', '557', '558', '560', '561', '563', '594', '595', '596', '597', '598', '599', '600', '601', '602', '606', '615', '618', '662', '695', '697']
-  height        = 400;
-  width         = 1200;
+  height        = 600;
+  width         = 915;
   color         = d3.scale.category20();
   colorByPath   = {};
-  boxSide       = 75;
+  boxHeight     = 175;
+  boxWidth      = 75;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
-  linkScale     = d3.scale.linear().domain([0,93000]).range([3,50]);
+  linkScale     = d3.scale.linear().domain([0,93000]).range([3,200]);
   lowVolume     = 1;
   linkGutter    = 2;
 
  for (var i=0; i < 3; i++) {
    color(i)
  }
-
 
  flowIds.forEach(
  function(el,i) {
@@ -77,8 +77,8 @@ function(){
 
   var groups = svg.selectAll("g").data(Routes).enter().append("g")
         .attr("transform", function(d,i) {
-        return "translate("+ (boxSide*(i%12))+","
-                           + (boxSide*Math.floor(i/12)+5)
+        return "translate("+ (boxWidth*(i%12))+","
+                           + (boxHeight*Math.floor(i/12)+5)
                            + ")"
         })
         
@@ -131,7 +131,7 @@ function(){
   // add the circles for low volume
   groups.each(
   function(data,index) {
-    var currentYposLow = 112;
+    var currentYposLow = 325;
     var xIndex1 = 0;
     var xIndex2 = 0;
   d3.select(this).selectAll("low")
