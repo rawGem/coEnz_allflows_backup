@@ -57,7 +57,7 @@ function(){
   boxSide       = 310;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
-  linkScale     = d3.scale.linear().domain([0,70000]).range([3,50]);
+  linkScale     = d3.scale.linear().domain([0,93000]).range([3,50]);
   lowVolume     = 1;
   linkGutter    = 0;
 
