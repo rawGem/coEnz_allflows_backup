@@ -54,7 +54,7 @@ function(){
   width         = 1500;
   color         = d3.scale.category20b();
   colorByPath   = {};
-  boxWidth       = 35;
+  boxWidth       = 41;
   boxHeight       = 410;
   routeKeys     = Object.keys(Routes);
   currentYpos   = 0;
@@ -125,7 +125,7 @@ function(){
         return linkScale(data[d].segments[0]["Product volume"])
         }
         })
-        .attr("width", 30)
+        .attr("width", 40)
         .attr("fill", function(d,i) {
         if (data[d]) {
         console.log("fill data", d)
