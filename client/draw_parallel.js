@@ -59,7 +59,7 @@ function(){
   currentYpos   = 0;
   linkScale     = d3.scale.linear().domain([0,93000]).range([3,50]);
   lowVolume     = 1;
-  linkGutter    = 0;
+  linkGutter    = 2;
 
  for (var i=0; i < 3; i++) {
    color(i)
@@ -116,7 +116,7 @@ function(){
         })
         .attr("width", 70)
         .attr("stroke-width", 1)
-        .attr("stroke", "#fff")
+        .attr("stroke", "none")
         .attr("fill", function(d,i) {
         if (data[d] && data[d].segments[0]["Product volume"] > 1){
           var clr = colorByPath[d]
@@ -131,7 +131,7 @@ function(){
   // add the circles for low volume
   groups.each(
   function(data,index) {
-    var currentYposLow = 100;
+    var currentYposLow = 112;
     var xIndex1 = 0;
     var xIndex2 = 0;
   d3.select(this).selectAll("low")
