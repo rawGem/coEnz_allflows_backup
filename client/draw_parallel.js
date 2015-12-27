@@ -130,7 +130,7 @@ function(){
 
   groups.each(
   function(data,index) {
-    var currentYposLow = 95;
+    var currentYposLow = 100;
     var xIndex = 0;
   d3.select(this).selectAll("low")
         .data(function(d,i) {
@@ -143,7 +143,7 @@ function(){
         if (data[d]){
           if (data[d].segments[0]["Product volume"] < 1) {
             xIndex+=1
-            return 7*(xIndex-1)+15
+            return 10*(xIndex-1)+15
           }
         }
         return 10})
@@ -158,7 +158,7 @@ function(){
         })
         .attr("r", function(d,i) {
         if (data[d] && data[d].segments[0]["Product volume"] < 1){
-          return 3
+          return 4
           return linkScale(data[d].segments[0]["Product volume"])
          }
         })
