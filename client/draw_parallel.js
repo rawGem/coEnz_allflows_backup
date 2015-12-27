@@ -174,7 +174,8 @@ function(){
   groups.each(
   function(data,index) {
     var dy = Math.max.apply(null, Object.keys(data));
-    var currentYposLow = 95
+    var currentYposLow = 95;
+    var xIndex = 0;
     //var currentYposLow = data[dy].dy + 10
     console.log("---- second each ------")
     console.log(data)
@@ -187,11 +188,18 @@ function(){
         .append("circle")
         .attr("class", "low")
         .attr("cx", function(d,i) {
+        if (data[d]){
+          if (data[d].segments[0]["Product volume"] < 1) {
+            xIndex+=1
+            return 7*(xIndex-1)+15
+          }
+        }
         //console.log(data[d]) 
         return 10})
         .attr("cy", function(d,i) {
         if (data[d]){
           if (data[d].segments[0]["Product volume"] < 1) {
+            return currentYposLow
             currentYposLow += linkScale(data[d].segments[0]["Product volume"])+3
             return currentYposLow - linkScale(data[d].segments[0]["Product volume"])
           }
@@ -214,6 +222,7 @@ function(){
         .attr("stroke", "none")
         .attr("fill", function(d,i) {
         if (data[d] && data[d].segments[0]["Product volume"] < 1){
+          return "orange"
           var clr = colorByPath[d]
           var seg = data[d].segments[0]
           return seg["Product volume"] < lowVolume ? "url(#org_diag)" : clr ? clr : "#eeeeef"
