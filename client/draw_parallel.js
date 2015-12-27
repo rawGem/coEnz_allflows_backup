@@ -184,12 +184,12 @@ function(){
         return flowIds
         })
        .enter()
-        .append("rect")
+        .append("circle")
         .attr("class", "low")
-        .attr("x", function(d,i) {
+        .attr("cx", function(d,i) {
         //console.log(data[d]) 
         return 10})
-        .attr("y", function(d,i) {
+        .attr("cy", function(d,i) {
         if (data[d]){
           if (data[d].segments[0]["Product volume"] < 1) {
             currentYposLow += linkScale(data[d].segments[0]["Product volume"])+3
@@ -197,13 +197,19 @@ function(){
           }
         }
         })
-        .attr("height", function(d,i) {
+        //.attr("height", function(d,i) {
+        //if (data[d] && data[d].segments[0]["Product volume"] < 1){
+        //  return 1
+        //  return linkScale(data[d].segments[0]["Product volume"])
+        // }
+        //})
+        .attr("r", function(d,i) {
         if (data[d] && data[d].segments[0]["Product volume"] < 1){
-          return 1
+          return 3
           return linkScale(data[d].segments[0]["Product volume"])
-       }
+         }
         })
-        .attr("width", 145)
+        //.attr("width", 145)
         .attr("stroke-width", 1)
         .attr("stroke", "none")
         .attr("fill", function(d,i) {
